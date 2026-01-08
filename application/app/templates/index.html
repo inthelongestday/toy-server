@@ -2,14 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Kayla Kim</title>
+    <title>Choose Your Number</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-    <div class="hero">
-        <h1>Kayla Kim</h1>
-    </div>
+<div class="container">
+    <button id="draw-btn">🎲 Choose your number!</button>
+
+    <div id="balls" class="balls"></div>
+</div>
+
+<script>
+    const button = document.getElementById("draw-btn");
+    const ballsDiv = document.getElementById("balls");
+
+    button.addEventListener("click", async () => {
+        const response = await fetch("/draw");
+        const numbers = await response.json();
+
+        ballsDiv.innerHTML = "";
+
+        numbers.forEach(num => {
+            const ball = document.createElement("div");
+            ball.className = "ball";
+            ball.textContent = num;
+            ballsDiv.appendChild(ball);
+        });
+    });
+</script>
 
 </body>
 </html>
